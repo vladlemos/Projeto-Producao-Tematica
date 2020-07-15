@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset= "UTF-8">
+    <style>
+
+      body{
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+    </style>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script>
+
+
+        google.charts.load('current', {'packages':['corechart']});
+
+        function desenharPizza1 (){
+
+            var tabela = new google.visualization.DataTable();
+            tabela.addColumn('string','categorias');
+            tabela.addColumn('number','valores');
+            tabela.addRows([
+
+                ['2º LEILÃO SFI',136],
+                ['VENDA DIRETA ESPECIAL',4],
+                ['VENDA DIRETA ONLINE',1740],
+                ['VENDA ONLINE',167],
+            ]);
+
+            var grafico = new google.visualization.PieChart(document.getElementById('graficoPizza1'));
+            grafico.draw(tabela);
+    }
+          function desenharPizza2 (){
+
+            var tabela2 = new google.visualization.DataTable();
+            tabela2.addColumn('string','categorias');
+            tabela2.addColumn('number','valores');
+            tabela2.addRows([
+
+                ['2º LEILÃO SFI',76096461],
+                ['VENDA DIRETA ESPECIAL',23450],
+                ['VENDA DIRETA ONLINE',859730390],
+                ['VENDA ONLINE',76491123],
+            ]);
+
+            var grafico2 = new google.visualization.PieChart(document.getElementById('graficoPizza2'));
+            grafico2.draw(tabela2);
+    }
+
+    google.charts.setOnLoadCallback(desenharPizza1);
+    google.charts.setOnLoadCallback(desenharPizza2);
+
+
+    </script>
+</head>
+<body>
+    Quantidade de Imóveis por Modalidade de Venda 
+    <div id="graficoPizza1"></div>
+    <br><br><br>
+    Valor Total de Imóveis por Modalidade de Venda (em milhões de reais)
+    <div id="graficoPizza2"></div>
+</body>
+</html>

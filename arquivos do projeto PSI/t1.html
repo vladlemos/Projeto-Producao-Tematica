@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lista de Imóveis</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<style id="compiled-css" type="text/css">
+/*configuração de estilo da tabela*/
+      th, td {
+    padding: 5px;
+    border:1px solid black;
+}
+.esconder {
+    display: none;
+
+}
+
+h1{
+  text-transform: uppercase;
+
+}
+a{
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 20px;
+  position: absolute;
+  top: 75;
+  right: 0;
+}
+/*fim*/
+</style>
+
+<script type="text/javascript">
+// INICIO FUNÇÃO DE MASCARA MAIUSCULA
+function maiuscula(z){
+        v = z.value.toUpperCase();
+        z.value = v;
+    }
+//FIM DA FUNÇÃO MASCARA MAIUSCULA
+</script>
+
+    <script src="stringify.js" charset="utf-8">
+      /*biblioteca para montagem da tabela usando json*/
+    </script>
+
+</head>
+<body>
+<br><br>
+<!--FORM de busca-->
+
+<header>
+<h1>psi gilie/sp</h1>
+<h2>Lista de Imóveis Disponíveis</h2>
+<a href=t2.html>gráficos</a><br><br><br>
+</header>
+
+<select>
+    <option value="Tipo de Imóvel">Tipo de Imóvel</option>
+    <option value="Endereço">Endereço</option>
+    <option value="Modalidade de Venda">Modalidade de Venda</option>
+    <option value="Cidade">Cidade</option>
+    <option value="Estado">Estado</option>
+</select>
+
+<input type="text" onkeyup="maiuscula(this)"/>
+<button>Pesquisar</button>
+<!--fim do FORM -->
+
+<script type="text/javascript" src="imoveis.json">/*Arquivo JSON usado para montagem da tabela*/</script>
+<script type="text/javascript">
+
+/*lendo arquivo JSON*/
+var data = JSON.parse(json);
+console.log(data);
+
+/*montando a tabela*/
+var campos = Object.keys(data[0]);
+
+
+/* CRIAR HTML E JUNTAR O <TR> À ARRAY */
+var table = document.createElement('table');
+var tr = document.createElement('tr');
+campos.forEach(function (titulo) {
+    var th = document.createElement('th');
+    th.innerHTML = titulo;
+    tr.appendChild(th);
+});
+table.appendChild(tr);
+data.map(function (celula) {
+    var tr = document.createElement('tr');
+    Object.keys(celula).forEach(function (valor) {
+        var td = document.createElement('td');
+        td.innerHTML = celula[valor];
+        tr.appendChild(td);
+    });
+    table.appendChild(tr);
+    celula.DOM = tr;
+    return celula;
+});
+document.body.appendChild(table);
+
+/* PARTE DE FILTRAGENS */
+var select = document.querySelector('select');
+var input = document.querySelector('input');
+var button = document.querySelector('button');
+button.addEventListener('click', function () {
+    var prop = select.value;
+    var val = input.value;
+    data.forEach(function (linha) {
+        var valor = linha[prop];
+        if (valor && linha[prop].indexOf(val) < 0) linha.DOM.classList.add('esconder');
+        else linha.DOM.classList.remove('esconder');
+    });
+});
+/*FIM DA MONTAGEM E FILTRAGEM*/
+</script>
+
+</body>
+</html>
